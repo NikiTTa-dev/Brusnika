@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brusnika.Api", "Brusnika.Api\Brusnika.Api.csproj", "{C4C735CE-2E4A-4436-A368-5CC4F4F498B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brusnika.Contracts", "Brusnika.Contracts\Brusnika.Contracts.csproj", "{3B5373AE-0C61-48AE-B53A-D6481DC5F850}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4C735CE-2E4A-4436-A368-5CC4F4F498B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C735CE-2E4A-4436-A368-5CC4F4F498B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C735CE-2E4A-4436-A368-5CC4F4F498B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C735CE-2E4A-4436-A368-5CC4F4F498B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B5373AE-0C61-48AE-B53A-D6481DC5F850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B5373AE-0C61-48AE-B53A-D6481DC5F850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B5373AE-0C61-48AE-B53A-D6481DC5F850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B5373AE-0C61-48AE-B53A-D6481DC5F850}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
