@@ -1,6 +1,6 @@
-namespace Brusnika.Contracts.CompanyStructure;
+﻿namespace Brusnika.Application.CompanyStructure;
 
-public record CompanyStructureResponse(
+public record CompanyStructureResult(
     List<Location> Locations);
 
 public record Location(

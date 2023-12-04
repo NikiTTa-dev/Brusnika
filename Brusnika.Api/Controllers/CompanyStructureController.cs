@@ -1,4 +1,7 @@
+using Brusnika.Application.CompanyStructure;
 using Brusnika.Contracts.CompanyStructure;
+using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Brusnika.Api.Controllers;
@@ -7,112 +10,25 @@ namespace Brusnika.Api.Controllers;
 [Route("[controller]")]
 public class CompanyStructureController : ControllerBase
 {
-    private static readonly string[] Summaries = {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    private readonly IMapper _mapper;
+    private readonly ISender _mediator;
 
-    private readonly ILogger<CompanyStructureController> _logger;
-
-    public CompanyStructureController(ILogger<CompanyStructureController> logger)
+    public CompanyStructureController(
+        IMapper mapper,
+        ISender mediator)
     {
-        _logger = logger;
+        _mapper = mapper;
+        _mediator = mediator;
     }
 
-    [HttpPost("GetWeatherForecast1")]
-    public async Task<CompanyStructureResponse> Get1(CompanyStructureResponse request)
+    [HttpGet]
+    public async Task<IActionResult> CompanyStructure([FromQuery]CompanyStructureRequest request)
     {
-        await Task.CompletedTask;
-        return new CompanyStructureResponse(new List<FilialBranch>());
+        var command = _mapper.Map<CompanyStructureQuery>(request);
+        var createResult = await _mediator.Send(command);
+        
+        return createResult.Match(
+            result => Ok(_mapper.Map<CompanyStructureResponse>(result)),
+            errors => new OkObjectResult("error"));
     }
-    
-    [HttpGet("GetWeatherForecast2")]
-    public IEnumerable<WeatherForecast> Get2()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-    }
-    [HttpGet("GetWeatherForecast3")]
-    public IEnumerable<WeatherForecast> Get3()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-    }
-    [HttpGet("GetWeatherForecast4")]
-    public IEnumerable<WeatherForecast> Get4()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
-    }
-    
-    [HttpGet("GetWeatherForecast5")]
-    public IEnumerable<WeatherForecast> Get5()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-    }
-    [HttpGet("GetWeatherForecast6")]
-    public IEnumerable<WeatherForecast> Get6()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-    }
-    [HttpGet("GetWeatherForecast7")]
-    public IEnumerable<WeatherForecast> Get7()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-    }
-    [HttpGet("GetWeatherForecast8")]
-    public IEnumerable<WeatherForecast> Get8()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-    }
-    [HttpGet("GetWeatherForecast9")]
-    public IEnumerable<WeatherForecast> Get9()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-    }
-    
 }
