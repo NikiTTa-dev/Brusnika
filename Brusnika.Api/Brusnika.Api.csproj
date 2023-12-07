@@ -12,7 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Brusnika.Application\Brusnika.Application.csproj" />
       <ProjectReference Include="..\Brusnika.Contracts\Brusnika.Contracts.csproj" />
+      <ProjectReference Include="..\Brusnika.Infrastructure\Brusnika.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
