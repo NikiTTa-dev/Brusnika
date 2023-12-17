@@ -1,36 +1,14 @@
 namespace Brusnika.Contracts.CompanyStructure;
 
 public record CompanyStructureResponse(
-    List<Location> Locations);
-
-public record Location(
-    Guid Id,
-    string Name,
-    List<Position> Positions,
-    List<FilialBranch> FilialBranches);
-
-public record FilialBranch(
-    Guid Id,
-    string Name,
-    List<Position> Positions,
-    List<Subdivision> Subdivisions);
-    
-public record Subdivision(
-    Guid Id,
-    string Name,
-    List<Position> Positions,
-    List<Department> Departments);
-
-public record Department(
-    Guid Id,
-    string Name,
-    List<Position> Positions,
-    List<Group> Group);
+    List<Group> Locations);
 
 public record Group(
     Guid Id,
     string Name,
-    List<Position> Positions);
+    string CategoryName,
+    List<Position> Positions,
+    List<Group> ChildrenGroups);
 
 public record Position(
     Guid Id,
