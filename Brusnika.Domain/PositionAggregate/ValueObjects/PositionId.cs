@@ -1,4 +1,5 @@
 using Brusnika.Domain.Common.Models;
+using MongoDB.Bson;
 
 namespace Brusnika.Domain.PositionAggregate.ValueObjects;
 
@@ -10,7 +11,7 @@ public sealed class PositionId : StringEntityId<PositionId>
 
     public static PositionId CreateUnique()
     {
-        return new PositionId("");
+        return new PositionId(ObjectId.GenerateNewId().ToString());
     }
     
     public static PositionId Create(string id)

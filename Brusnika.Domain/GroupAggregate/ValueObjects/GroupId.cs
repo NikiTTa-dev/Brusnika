@@ -1,4 +1,5 @@
 using Brusnika.Domain.Common.Models;
+using MongoDB.Bson;
 
 namespace Brusnika.Domain.GroupAggregate.ValueObjects;
 
@@ -10,7 +11,7 @@ public sealed class GroupId : StringEntityId<GroupId>
 
     public static GroupId CreateUnique()
     {
-        return new GroupId("");
+        return new GroupId(ObjectId.GenerateNewId().ToString());
     }
     
     public static GroupId Create(string id)

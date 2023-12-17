@@ -5,7 +5,9 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using Position = Brusnika.Domain.PositionAggregate.Position;
+using Group = Brusnika.Domain.GroupAggregate.Group;
 
 namespace Brusnika.Api.Controllers;
 
@@ -34,15 +36,15 @@ public class CompanyStructureController : ControllerBase
     [HttpGet("GetWeatherForecast2")]
     public async Task<IActionResult> Get2()
     {
-        var group = Group.Create("Group1");
-        var group2 = Group.Create("Group2");
-        var position = Position.Create("Position1");
-        var position2 = Position.Create("Position2");
+        var group = Group.Create("Group1", "category1", null);
+        var group2 =  Group.Create("Group2", "category1", null);
+        var position = Position.Create("Position1", "type1", "workTyep1", "fname1", "lname1", "patronymic1", null);
+        var position2 = Position.Create("Position2", "type2", "workTyep2", "fname2", "lname2", "patronymic2", null);
         await _positionRepository.InsertOneAsync(position);
         await _positionRepository.InsertOneAsync(position2);
         await _groupRepository.InsertOneAsync(group2);
         var groups = await _groupRepository.AsQueryable.ToListAsync();
-        group2 = groups.Last(g => g.GroupName == "Group2");
+        group2 = groups.Last(g => g.Title == "Group2");
         var positions = await _positionRepository.AsQueryable.ToListAsync();
         position = positions.Last(g => g.Name == "Position1");
         position2 = positions.Last(g => g.Name == "Position2");
@@ -51,7 +53,7 @@ public class CompanyStructureController : ControllerBase
         group.AddGroup(group2.Id!);
         
         await _groupRepository.InsertOneAsync(group);
-        group = await _groupRepository.AsQueryable.OrderByDescending(g => g.Id).FirstAsync(g => g.GroupName == "Group1");
+        group = await _groupRepository.AsQueryable.OrderByDescending(g => g.Id).FirstAsync(g => g.Title == "Group1");
         
         return Ok(group);
     }

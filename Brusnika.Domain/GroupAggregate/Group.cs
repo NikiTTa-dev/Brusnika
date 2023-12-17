@@ -6,31 +6,48 @@ namespace Brusnika.Domain.GroupAggregate;
 
 public sealed class Group : AggregateRoot<GroupId>
 {
-    public string GroupName { get; private set; }
-    
+    public string Title { get; private set; }
+    public string CategoryName { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime UpdatedAt { get; private set; }
+    public GroupId? GroupId { get; private set; }
+
+
     private List<PositionId> _positionIds = new();
+
     public IReadOnlyCollection<PositionId> Positions
     {
         get => _positionIds;
         private set => _positionIds = value.ToList();
     }
-    
+
     private List<GroupId> _groupIds = new();
+
     public IReadOnlyCollection<GroupId> Groups
     {
         get => _groupIds;
         private set => _groupIds = value.ToList();
     }
-    
-    private Group(GroupId id, string groupName)
+
+    private Group(
+        GroupId id,
+        string title,
+        string categoryName,
+        DateTime createdAt, 
+        DateTime updatedAt,
+        GroupId? groupId)
     {
         Id = id;
-        GroupName = groupName;
+        Title = title;
+        CategoryName = categoryName;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+        GroupId = groupId;
     }
 
-    public static Group Create(string name)
+    public static Group Create(string title, string categoryName, GroupId? groupId)
     {
-        return new Group(GroupId.Create(null), name);
+        return new Group(GroupId.CreateUnique(), title, categoryName, DateTime.UtcNow, DateTime.UtcNow, groupId);
     }
 
     public void AddPosition(PositionId position)
