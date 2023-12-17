@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+
+  company_structure_mongodb:
+    image: mongo:7.0.2
+    container_name: company_structure_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: company_structure
+    ports:
+      - 6019:27017
+    volumes:
+      - ./data/mongo/db:/data/db
