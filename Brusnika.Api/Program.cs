@@ -2,12 +2,15 @@ using Brusnika.Infrastructure;
 
 using Brusnika.Api;
 using Brusnika.Application;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Host.UseSerilog((_, configuration) =>
+{
+    configuration.ReadFrom.Configuration(builder.Configuration);
+});
+
 builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApi()
@@ -15,15 +18,24 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
+app.UseExceptionHandler("/error");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(c =>
+    {
+        c.AllowCredentials();
+        c.WithOrigins(
+            "https://localhost:3000",
+            "http://localhost:3000");
+        c.AllowAnyMethod();
+        c.AllowAnyHeader();
+    });
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

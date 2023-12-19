@@ -1,4 +1,4 @@
-﻿namespace Brusnika.Contracts.Editing.Positions;
+﻿namespace Brusnika.Contracts.Editing.Positions.Responses;
 
 public record CreatePositionResponse(
     Guid PositionId);

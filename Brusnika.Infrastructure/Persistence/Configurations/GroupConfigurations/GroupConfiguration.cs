@@ -1,4 +1,3 @@
-using Brusnika.Application.Common.Interfaces.Persistence;
 using Brusnika.Domain.GroupAggregate;
 using Brusnika.Domain.GroupAggregate.ValueObjects;
 using Brusnika.Infrastructure.Persistence.Configurations.Common;

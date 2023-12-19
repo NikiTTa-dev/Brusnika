@@ -1,9 +1,12 @@
 using System.Reflection;
 using Brusnika.Application.Common.Interfaces.Persistence;
+using Brusnika.Application.Common.Interfaces.Services;
+using Brusnika.Application.Common.Settings;
 using Brusnika.Infrastructure.Persistence;
 using Brusnika.Infrastructure.Persistence.Configurations.Common;
 using Brusnika.Infrastructure.Persistence.Configurations.Registrars;
 using Brusnika.Infrastructure.Persistence.Repositories;
+using Brusnika.Infrastructure.Services;
 using Brusnika.Infrastructure.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +21,9 @@ public static class DependencyInjection
         ConfigurationManager configuration)
     {
         services
-            .AddPersistence(configuration);
+            .AddPersistence(configuration)
+            .AddSingleton<IDateTimeProvider, DateTimeProvider>()
+            .AddSettings(configuration);
             
         return services;
     }
@@ -37,6 +42,17 @@ public static class DependencyInjection
         services.AddSingleton<IMongoDbContext, BrusnikaMongoDbContext>();
         services.AddScoped<IGroupRepository, GroupRepository>();
         services.AddScoped<IPositionRepository, PositionRepository>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddSettings(
+        this IServiceCollection services,
+        ConfigurationManager configuration)
+    {
+        var validationSettings = new ValidationSettings();
+        configuration.Bind(ValidationSettings.SectionName, validationSettings);
+        services.AddSingleton(Options.Create(validationSettings));
         
         return services;
     }

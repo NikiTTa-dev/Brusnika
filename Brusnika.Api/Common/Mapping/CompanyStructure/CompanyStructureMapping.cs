@@ -2,7 +2,7 @@
 using Brusnika.Contracts.CompanyStructure;
 using Mapster;
 
-namespace Brusnika.Api.Common.Mapping;
+namespace Brusnika.Api.Common.Mapping.CompanyStructure;
 
 public class CompanyStructureMapping : IRegister
 {

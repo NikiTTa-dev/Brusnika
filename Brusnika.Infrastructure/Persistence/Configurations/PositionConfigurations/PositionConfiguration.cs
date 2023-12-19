@@ -1,5 +1,4 @@
-﻿using Brusnika.Application.Common.Interfaces.Persistence;
-using Brusnika.Domain.PositionAggregate;
+﻿using Brusnika.Domain.PositionAggregate;
 using Brusnika.Domain.PositionAggregate.ValueObjects;
 using Brusnika.Infrastructure.Persistence.Configurations.Common;
 using Brusnika.Infrastructure.Persistence.Configurations.Registrars;

@@ -7,7 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ErrorOr" Version="1.3.0" />
+      <PackageReference Include="FluentValidation" Version="11.8.1" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
       <PackageReference Include="MediatR" Version="12.2.0" />
       <ProjectReference Include="..\Brusnika.Domain\Brusnika.Domain.csproj" />
       <PackageReference Include="MongoDB.Driver" Version="2.23.1" />

@@ -1,6 +1,30 @@
 version: "3.7"
 
 services:
+  company_structure:
+    depends_on:
+      - "company_structure_mongodb"
+    container_name: company_structure_services
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ~/.aspnet/https:/https/
+    build:
+      context: .
+      dockerfile: ProCardsNew.Api/Dockerfile
+    environment:
+      #      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.crt
+      #      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https/privkey.key
+      - DOTNET_GENERATE_ASPNET_CERTIFICATE=false
+#      - ConnectionStrings__default=UserId=postgres;Password=postgres;Server=app_db;Port=5432;Database=ProCardsDbDriver;IntegratedSecurity=true;Pooling=true;
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=8443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Protocols=Http1AndHttp2
+    networks:
+      - dev
 
   company_structure_mongodb:
     image: mongo:7.0.2

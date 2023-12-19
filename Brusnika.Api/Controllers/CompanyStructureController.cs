@@ -1,3 +1,4 @@
+using Brusnika.Api.Controllers.Common;
 using Brusnika.Application.Common.Interfaces.Persistence;
 using Brusnika.Application.CompanyStructure;
 using Brusnika.Contracts.CompanyStructure;
@@ -13,7 +14,7 @@ namespace Brusnika.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CompanyStructureController : ControllerBase
+public class CompanyStructureController : ApiController
 {
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;

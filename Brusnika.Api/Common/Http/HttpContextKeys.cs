@@ -1,4 +1,4 @@
-﻿namespace Brusnika.Api.Common;
+﻿namespace Brusnika.Api.Common.Http;
 
 public static class HttpContextKeys
 {
