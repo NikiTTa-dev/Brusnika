@@ -1,4 +1,4 @@
-﻿namespace Brusnika.Application.Common.Interfaces.Persistence;
+﻿namespace Brusnika.Infrastructure.Persistence.Configurations.Common;
 
 public interface IMongoDbConfiguration
 {

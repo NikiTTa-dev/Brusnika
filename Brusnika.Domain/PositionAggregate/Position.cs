@@ -14,8 +14,13 @@ public class Position : AggregateRoot<PositionId>
     public string? FirstName { get; private set; }
     public string? LastName { get; private set; }
     public string? Patronymic { get; private set; }
-    public GroupId? GroupId { get; private set; }
     
+    private List<GroupId> _parentGroupIds = new();
+    public IReadOnlyCollection<GroupId> ParentGroupsIds
+    {
+        get => _parentGroupIds;
+        private set => _parentGroupIds = value.ToList();
+    }
     
     private Position(
         PositionId id,
@@ -25,7 +30,6 @@ public class Position : AggregateRoot<PositionId>
         string? firstName,
         string? lastName, 
         string? patronymic, 
-        GroupId? groupId,
         DateTime createdAt,
         DateTime updatedAt)
     {
@@ -36,7 +40,6 @@ public class Position : AggregateRoot<PositionId>
         FirstName = firstName;
         LastName = lastName;
         Patronymic = patronymic;
-        GroupId = groupId;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -47,8 +50,7 @@ public class Position : AggregateRoot<PositionId>
         string workType, 
         string? firstName,
         string? lastName, 
-        string? patronymic, 
-        GroupId? groupId)
+        string? patronymic)
     {
         return new Position(
             PositionId.CreateUnique(),
@@ -58,9 +60,13 @@ public class Position : AggregateRoot<PositionId>
             firstName,
             lastName,
             patronymic,
-            groupId,
             DateTime.UtcNow, 
             DateTime.UtcNow);
+    }
+    
+    public void AddParentGroup(GroupId groupId)
+    {
+        _parentGroupIds.Add(groupId);
     }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

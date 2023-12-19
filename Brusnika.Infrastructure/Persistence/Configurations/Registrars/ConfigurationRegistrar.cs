@@ -1,5 +1,6 @@
 using System.Reflection;
 using Brusnika.Application.Common.Interfaces.Persistence;
+using Brusnika.Infrastructure.Persistence.Configurations.Common;
 
 namespace Brusnika.Infrastructure.Persistence.Configurations.Registrars;
 

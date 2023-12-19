@@ -1,27 +1,34 @@
 ﻿using Brusnika.Application.Common.Interfaces.Persistence;
 using Brusnika.Domain.PositionAggregate;
+using Brusnika.Infrastructure.Persistence.Configurations.Common;
 using Brusnika.Infrastructure.Settings;
+using MediatR;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
 namespace Brusnika.Infrastructure.Persistence.Repositories;
 
-public class PositionRepository: IPositionRepository
+public class PositionRepository: GenericRepository<Position>, IPositionRepository
 {
-    private readonly IMongoCollection<Position> _collection;
+    public IMongoQueryable<Position> AsQueryable => Collection.AsQueryable();
 
-    public IMongoQueryable<Position> AsQueryable => _collection.AsQueryable();
-
-    public PositionRepository(IMongoDbContext context, IOptions<MongoDbSettings> settings)
+    public PositionRepository(IMongoDbContext context, IOptions<MongoDbSettings> settings, IPublisher publisher) 
+        : base(context.Database.GetCollection<Position>(settings.Value.PositionsCollectionName),
+            publisher)
     {
-        _collection = context.Database.GetCollection<Position>(settings.Value.PositionsCollectionName);
     }
     
     // public Task<Position> FindOneAsync(StringEntityId id)
     // {
     //     throw new NotImplementedException();
     // }
+
+    public async Task UpdateOneAsync(Position position)
+    {
+        TrackEntity(position);
+        await Collection.FindOneAndReplaceAsync(p => position.Id == p.Id, position);
+    }
 
     public Task<List<Position>> GetAllAsync()
     {
@@ -30,6 +37,7 @@ public class PositionRepository: IPositionRepository
     
     public async Task InsertOneAsync(Position position)
     {
-        await _collection.InsertOneAsync(position);
+        TrackEntity(position);
+        await Collection.InsertOneAsync(position);
     }
 }
