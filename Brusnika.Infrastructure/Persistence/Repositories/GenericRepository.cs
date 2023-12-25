@@ -37,4 +37,12 @@ public abstract class GenericRepository<TDocument> : IGenericRepository<TDocumen
     {
         TrackedEntities.Add(entity);
     }
+    
+    protected virtual void TrackEntities(IEnumerable<TDocument> entities)
+    {
+        foreach (var entity in entities)
+        {
+            TrackEntity(entity);
+        }
+    }
 }

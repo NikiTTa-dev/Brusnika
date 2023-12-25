@@ -1,5 +1,6 @@
 ﻿using Brusnika.Application.Common.Interfaces.Persistence;
 using Brusnika.Domain.GroupAggregate;
+using Brusnika.Domain.GroupAggregate.ValueObjects;
 using Brusnika.Infrastructure.Persistence.Configurations.Common;
 using Brusnika.Infrastructure.Settings;
 using MediatR;
@@ -33,13 +34,24 @@ public class GroupRepository : GenericRepository<Group>, IGroupRepository
         await Collection.FindOneAndReplaceAsync(p => group.Id == p.Id, group);
     }
 
-    // public Task<Group> FindOneAsync(StringEntityId id)
-    // {
-    //     throw new NotImplementedException();
-    // }
-
-    public Task<List<Group>> GetAllAsync()
+    public async Task<Group> FindOneAsync(GroupId id)
     {
-        throw new NotImplementedException();
+        var filter = Builders<Group>.Filter.Eq(p => p.Id, id);
+        var group = await Collection.Find(filter).FirstAsync();
+        TrackEntity(group);
+        return group;
+    }
+
+    public async Task<List<Group>> GetAllAsync()
+    {
+        var groups = await Collection.Find(_ => true).ToListAsync();
+        TrackEntities(groups);
+        return groups;
+    }
+
+    public async Task DeleteAsync(GroupId id)
+    {
+        var filter = Builders<Group>.Filter.Eq(p => p.Id, id);
+        await Collection.DeleteOneAsync(filter);
     }
 }

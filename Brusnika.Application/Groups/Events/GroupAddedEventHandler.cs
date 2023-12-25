@@ -3,7 +3,7 @@ using Brusnika.Domain.GroupAggregate.Events;
 using MediatR;
 using MongoDB.Driver.Linq;
 
-namespace Brusnika.Application.Editing.Events;
+namespace Brusnika.Application.Groups.Events;
 
 public class GroupAddedEventHandler : INotificationHandler<GroupAdded>
 {
@@ -16,8 +16,7 @@ public class GroupAddedEventHandler : INotificationHandler<GroupAdded>
 
     public async Task Handle(GroupAdded notification, CancellationToken cancellationToken)
     {
-        var group = await _groupRepository.AsQueryable
-            .FirstOrDefaultAsync(g => g.Id == notification.ChildGroupId, cancellationToken);
+        var group = await _groupRepository.FindOneAsync(notification.ChildGroupId);
         if (!group.ParentGroupsIds.Contains(notification.ParentGroupId))
             group.AddParentGroup(notification.ParentGroupId);
         await _groupRepository.UpdateOneAsync(group);

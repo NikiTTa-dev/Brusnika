@@ -1,19 +1,17 @@
 namespace Brusnika.Contracts.CompanyStructure;
 
 public record CompanyStructureResponse(
-    List<Group> Locations);
+    List<Group> Groups);
 
 public record Group(
-    Guid Id,
+    string Id,
     string Name,
     string CategoryName,
     List<Position> Positions,
     List<Group> ChildrenGroups);
 
 public record Position(
-    Guid Id,
-    Guid RoleId,
-    Guid WorkTypeId,
+    string Id,
     string RoleName,
     string WorkType,
     string Type,

@@ -12,12 +12,11 @@ using Group = Brusnika.Domain.GroupAggregate.Group;
 
 namespace Brusnika.Api.Controllers;
 
-[ApiController]
 [Route("[controller]")]
 public class CompanyStructureController : ApiController
 {
     private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
+    private readonly ISender _mediator;
     private readonly IPositionRepository _positionRepository;
     private readonly IGroupRepository _groupRepository;
 
@@ -25,7 +24,7 @@ public class CompanyStructureController : ApiController
         IPositionRepository positionRepository,
         IGroupRepository groupRepository,
         IMapper mapper,
-        IMediator mediator)
+        ISender mediator)
     {
         _positionRepository = positionRepository;
         _groupRepository = groupRepository;
@@ -39,36 +38,40 @@ public class CompanyStructureController : ApiController
     {
         var group = Group.Create("Group1", "category1");
         var group2 = Group.Create("Group2", "category1");
+        var group3 = Group.Create("Group3", "category1");
+        var group4 = Group.Create("Group4", "category1");
         var position = Position.Create("Position1", "type1", "workTyep1", "fname1", "lname1", "patronymic1");
         var position2 = Position.Create("Position2", "type2", "workTyep2", "fname2", "lname2", "patronymic2");
         await _positionRepository.InsertOneAsync(position);
         await _positionRepository.InsertOneAsync(position2);
-        await _groupRepository.InsertOneAsync(group2);
-        var groups = await _groupRepository.AsQueryable.ToListAsync();
-        group2 = groups.Last(g => g.Title == "Group2");
-        var positions = await _positionRepository.AsQueryable.ToListAsync();
-        position = positions.Last(g => g.Name == "Position1");
-        position2 = positions.Last(g => g.Name == "Position2");
-        group.AddPosition(position.Id);
-        group.AddPosition(position2.Id);
-        group.AddChildGroup(group2.Id);
-
         await _groupRepository.InsertOneAsync(group);
+        await _groupRepository.InsertOneAsync(group2);
+        await _groupRepository.InsertOneAsync(group3);
+        await _groupRepository.InsertOneAsync(group4);
+        group.AddPosition(position.Id);
+        group.AddChildGroup(group2.Id);
+        group2.AddPosition(position2.Id);
+        group2.AddChildGroup(group3.Id);
+        group2.AddChildGroup(group4.Id);
+
+        await _groupRepository.UpdateOneAsync(group);
+        await _groupRepository.UpdateOneAsync(group);
+        await _groupRepository.UpdateOneAsync(group2);
+        await _groupRepository.UpdateOneAsync(group3);
+        await _groupRepository.UpdateOneAsync(group4);
         await _groupRepository.PublishDomainEvents();
         await _positionRepository.PublishDomainEvents();
-        group = await _groupRepository.AsQueryable.OrderByDescending(g => g.Id).FirstAsync(g => g.Title == "Group1");
 
-        return Ok(group);
+        return Ok();
     }
 
     [HttpGet]
-    public async Task<IActionResult> CompanyStructure([FromQuery] CompanyStructureRequest request)
+    public async Task<IActionResult> CompanyStructure()
     {
-        var command = _mapper.Map<CompanyStructureQuery>(request);
-        var createResult = await _mediator.Send(command);
+        var createResult = await _mediator.Send(new CompanyStructureQuery());
 
         return createResult.Match(
             result => Ok(_mapper.Map<CompanyStructureResponse>(result)),
-            errors => new OkObjectResult("error"));
+            errors => Problem(errors));
     }
 }

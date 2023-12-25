@@ -1,9 +1,9 @@
 ﻿namespace Brusnika.Contracts.Editing.Positions.Requests;
 
 public record CreatePositionRequest(
-    Guid ParentId,
-    Guid RoleId,
-    Guid WorkTypeId,
+    string ParentId,
+    string RoleName,
+    string WorkType,
     string Type,
     string? FirstName,
     string? LastName,

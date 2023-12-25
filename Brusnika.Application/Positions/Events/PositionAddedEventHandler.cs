@@ -3,7 +3,7 @@ using Brusnika.Domain.PositionAggregate.Events;
 using MediatR;
 using MongoDB.Driver.Linq;
 
-namespace Brusnika.Application.Editing.Events;
+namespace Brusnika.Application.Positions.Events;
 
 public class PositionAddedEventHandler : INotificationHandler<PositionAdded>
 {
