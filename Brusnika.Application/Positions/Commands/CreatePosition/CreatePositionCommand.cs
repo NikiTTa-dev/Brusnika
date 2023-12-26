@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
 
-namespace Brusnika.Application.Positions.Commands.CreatePostion;
+namespace Brusnika.Application.Positions.Commands.CreatePosition;
 
 public record CreatePositionCommand(
     string ParentId,

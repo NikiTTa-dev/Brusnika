@@ -1,7 +1,6 @@
 using Brusnika.Application.Common.Interfaces.Persistence;
 using Brusnika.Domain.GroupAggregate.Events;
 using MediatR;
-using MongoDB.Driver.Linq;
 
 namespace Brusnika.Application.Groups.Events;
 

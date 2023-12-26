@@ -69,6 +69,29 @@ public class Position : AggregateRoot<PositionId>
         _parentGroupIds.Add(groupId);
     }
 
+    public void RemoveParentGroup(GroupId groupId)
+    {
+        if (_parentGroupIds.Contains(groupId))
+            _parentGroupIds.Remove(groupId);
+    }
+
+    public void UpdateFields(
+        string name,
+        string type,
+        string workType, 
+        string? firstName,
+        string? lastName, 
+        string? patronymic)
+    {
+        Name = name;
+        Type = type;
+        WorkType = workType;
+        FirstName = firstName;
+        LastName = lastName;
+        Patronymic = patronymic;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Position()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

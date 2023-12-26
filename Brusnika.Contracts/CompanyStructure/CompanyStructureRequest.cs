@@ -1,3 +1,3 @@
 namespace Brusnika.Contracts.CompanyStructure;
 
-public record CompanyStructureRequest();
+public record CompanyStructureRequest;

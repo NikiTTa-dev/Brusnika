@@ -1,4 +1,3 @@
-using Brusnika.Application.Groups.Common;
 using MediatR;
 using ErrorOr;
 

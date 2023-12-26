@@ -1,3 +1,3 @@
 namespace Brusnika.Application.Positions.Common;
 
-public record PositionSuccessCommandResult();
+public record PositionSuccessCommandResult;

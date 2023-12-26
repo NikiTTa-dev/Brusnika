@@ -42,7 +42,7 @@ public class GroupsController : ApiController
         var createResult = await _mediator.Send(command);
 
         return createResult.Match(
-            result => Ok(),
+            _ => Ok(),
             errors => Problem(errors));   
     }
     
@@ -53,7 +53,7 @@ public class GroupsController : ApiController
         var createResult = await _mediator.Send(command);
 
         return createResult.Match(
-            result => Ok(),
+            _ => Ok(),
             errors => Problem(errors));   
     }
     
@@ -64,7 +64,7 @@ public class GroupsController : ApiController
         var createResult = await _mediator.Send(command);
 
         return createResult.Match(
-            result => Ok(),
+            _ => Ok(),
             errors => Problem(errors));
     }
     
@@ -75,7 +75,7 @@ public class GroupsController : ApiController
         var createResult = await _mediator.Send(command);
 
         return createResult.Match(
-            result => Ok(),
+            _ => Ok(),
             errors => Problem(errors));
     }
 }

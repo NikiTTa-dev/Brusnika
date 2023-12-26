@@ -5,8 +5,6 @@ using Brusnika.Contracts.CompanyStructure;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 using Position = Brusnika.Domain.PositionAggregate.Position;
 using Group = Brusnika.Domain.GroupAggregate.Group;
 
@@ -33,8 +31,8 @@ public class CompanyStructureController : ApiController
     }
 
 
-    [HttpGet("GetWeatherForecast2")]
-    public async Task<IActionResult> Get2()
+    [HttpGet("Mock")]
+    public async Task<IActionResult> Mock()
     {
         var group = Group.Create("Group1", "category1");
         var group2 = Group.Create("Group2", "category1");

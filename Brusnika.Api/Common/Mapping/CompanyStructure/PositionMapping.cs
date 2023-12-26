@@ -1,7 +1,7 @@
 using Brusnika.Application.Positions.Commands.AddPosition;
-using Brusnika.Application.Positions.Commands.CreatePostion;
+using Brusnika.Application.Positions.Commands.CreatePosition;
 using Brusnika.Application.Positions.Commands.DeletePostion;
-using Brusnika.Application.Positions.Commands.EditPostion;
+using Brusnika.Application.Positions.Commands.EditPosition;
 using Brusnika.Application.Positions.Commands.RemovePosition;
 using Brusnika.Contracts.Editing.Positions.Requests;
 using Brusnika.Contracts.Editing.Positions.Responses;

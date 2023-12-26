@@ -1,7 +1,7 @@
 ﻿namespace Brusnika.Contracts.Editing.Positions.Requests;
 
 public record EditPositionRequest(
-    string ParentId,
+    string Id,
     string RoleName,
     string WorkType,
     string Type,

@@ -61,6 +61,15 @@ public sealed class Group : AggregateRoot<GroupId>
         AddDomainEvent(new PositionAdded(Id, positionId));
         _positionIdsIds.Add(positionId);
     }
+    
+    public void RemovePosition(PositionId positionId)
+    {
+        if (_positionIdsIds.Contains(positionId))
+        {
+            _positionIdsIds.Remove(positionId);
+            AddDomainEvent(new PositionRemoved(Id, positionId));
+        }
+    }
 
     public void AddChildGroup(GroupId groupId)
     {

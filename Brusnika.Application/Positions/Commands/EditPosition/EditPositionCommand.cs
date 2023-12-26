@@ -1,11 +1,11 @@
 using Brusnika.Application.Positions.Common;
-using MediatR;
 using ErrorOr;
+using MediatR;
 
-namespace Brusnika.Application.Positions.Commands.EditPostion;
+namespace Brusnika.Application.Positions.Commands.EditPosition;
 
 public record EditPositionCommand(
-    string ParentId,
+    string Id,
     string RoleName,
     string WorkType,
     string Type,

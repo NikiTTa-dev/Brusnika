@@ -51,7 +51,8 @@ public class CompanyStructureHandler : IRequestHandler<CompanyStructureQuery, Er
                 if (!parentsGroupsDictionary.TryGetValue(childGroup.Id.Value, out var res))
                     res = CreateGroupResult(childGroup);
                 parentsGroupsDictionary.TryAdd(childGroup.Id.Value, res);
-                parentsGroupsDictionary[currentGroup.Group.Id.Value].ChildrenGroups.Add(res);
+                if (!parentsGroupsDictionary[currentGroup.Group.Id.Value].ChildrenGroups.Contains(res))
+                    parentsGroupsDictionary[currentGroup.Group.Id.Value].ChildrenGroups.Add(res);
             }
 
             foreach (var positionId in currentGroup.Group.PositionsIds)
@@ -60,7 +61,8 @@ public class CompanyStructureHandler : IRequestHandler<CompanyStructureQuery, Er
                 if (position == null)
                     continue;
                 var pos = CreatePosition(position);
-                parentsGroupsDictionary[currentGroup.Group.Id.Value].Positions.Add(pos);
+                if (!parentsGroupsDictionary[currentGroup.Group.Id.Value].Positions.Contains(pos))
+                    parentsGroupsDictionary[currentGroup.Group.Id.Value].Positions.Add(pos);
             }
         }
 
