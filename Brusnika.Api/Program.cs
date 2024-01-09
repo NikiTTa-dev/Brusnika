@@ -18,11 +18,25 @@ builder.Services
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseExceptionHandler("/error");
 
 if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseCors(c =>
+    {
+        c.AllowCredentials();
+        c.WithOrigins(
+            "https://localhost:3000",
+            "http://localhost:3000");
+        c.AllowAnyMethod();
+        c.AllowAnyHeader();
+    });
+}
+else
 {
     app.UseSwagger();
     app.UseSwaggerUI();

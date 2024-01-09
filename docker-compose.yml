@@ -1,4 +1,8 @@
-version: "3.7"
+version: "3.8"
+
+networks:
+  dev:
+    driver: bridge
 
 services:
   company_structure:
@@ -10,18 +14,20 @@ services:
       - "8443:443"
     volumes:
       - ~/.aspnet/https:/https/
+      - ~/application/logs/api:/app/Logs
+    restart: always
     build:
       context: .
-      dockerfile: ProCardsNew.Api/Dockerfile
+      dockerfile: Brusnika.Api/Dockerfile
     environment:
       #      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.crt
       #      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https/privkey.key
-      - DOTNET_GENERATE_ASPNET_CERTIFICATE=false
-#      - ConnectionStrings__default=UserId=postgres;Password=postgres;Server=app_db;Port=5432;Database=ProCardsDbDriver;IntegratedSecurity=true;Pooling=true;
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=8443
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - MongoDbSettings__ConnectionString=mongodb://${MONGODB_DEFAULT_USER}:${MONGODB_DEFAULT_PASS}@company_structure_mongodb:27017
+      - ASPNETCORE_URLS=http://+:80
+      #  https://+:443;
+      #- ASPNETCORE_HTTPS_PORT=8443
+      #- ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      #- ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Protocols=Http1AndHttp2
     networks:
       - dev
@@ -30,10 +36,13 @@ services:
     image: mongo:7.0.2
     container_name: company_structure_mongodb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
-      MONGO_INITDB_DATABASE: company_structure
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_DEFAULT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_DEFAULT_PASS}
+      MONGO_INITDB_ROOT_DATABASE: company_structure
+    restart: always
     ports:
-      - 6019:27017
+      - "27017"
     volumes:
-      - ./data/mongo/db:/data/db
+      - ~/application/data/mongo/db:/data/db
+    networks: 
+      - dev

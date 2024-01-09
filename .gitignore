@@ -43,3 +43,4 @@ msbuild.err
 msbuild.wrn
 /data
 /Brusnika.Api/Logs/
+.env

@@ -7,10 +7,10 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Brusnika.Api/Brusnika.Api.csproj", "Brusnika.Api/"]
+COPY ["Brusnika.Application/Brusnika.Application.csproj", "Brusnika.Application/"]
 COPY ["Brusnika.Domain/Brusnika.Domain.csproj", "Brusnika.Domain/"]
 COPY ["Brusnika.Contracts/Brusnika.Contracts.csproj", "Brusnika.Contracts/"]
 COPY ["Brusnika.Infrastructure/Brusnika.Infrastructure.csproj", "Brusnika.Infrastructure/"]
-COPY ["Brusnika.Application/Brusnika.Application.csproj", "Brusnika.Application/"]
 RUN dotnet restore "Brusnika.Api/Brusnika.Api.csproj"
 COPY . .
 WORKDIR "/src/Brusnika.Api"
