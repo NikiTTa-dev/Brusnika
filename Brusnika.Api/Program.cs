@@ -30,8 +30,8 @@ if (app.Environment.IsDevelopment())
     {
         c.AllowCredentials();
         c.WithOrigins(
-            "https://localhost:3000",
-            "http://localhost:3000");
+            "https://localhost:8573",
+            "http://localhost:8573");
         c.AllowAnyMethod();
         c.AllowAnyHeader();
     });
@@ -44,8 +44,8 @@ else
     {
         c.AllowCredentials();
         c.WithOrigins(
-            "https://localhost:3000",
-            "http://localhost:3000");
+            "https://24procards.ru:8573",
+            "http://24procards.ru:8573");
         c.AllowAnyMethod();
         c.AllowAnyHeader();
     });

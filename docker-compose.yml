@@ -5,10 +5,10 @@ networks:
     driver: bridge
 
 services:
-  company_structure:
+  company_structure_api:
     depends_on:
       - "company_structure_mongodb"
-    container_name: company_structure_services
+    container_name: company_structure_api
     ports:
       - "8080:80"
       - "8443:443"
@@ -17,7 +17,7 @@ services:
       - ~/application/logs/api:/app/Logs
     restart: always
     build:
-      context: .
+      context: https://github.com/NikiTTa-dev/Brusnika.git
       dockerfile: Brusnika.Api/Dockerfile
     environment:
       #      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.crt
@@ -31,6 +31,19 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Protocols=Http1AndHttp2
     networks:
       - dev
+  
+  company_structure_react:
+    container_name: company_structure_react
+    depends_on: 
+      - "company_structure_api"
+    build:
+      context: https://github.com/NikiTTa-dev/brusnika-front.git
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - dev
+    ports:
+      - "8573:5173"
 
   company_structure_mongodb:
     image: mongo:7.0.2
