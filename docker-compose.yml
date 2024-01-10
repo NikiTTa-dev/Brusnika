@@ -10,8 +10,8 @@ services:
       - "company_structure_mongodb"
     container_name: company_structure_api
     ports:
-      - "8080:80"
-      - "8443:443"
+      - "80"
+#      - "8443"
     volumes:
       - ~/.aspnet/https:/https/
       - ~/application/logs/api:/app/Logs
@@ -43,7 +43,21 @@ services:
     networks:
       - dev
     ports:
-      - "8573:5173"
+      - "5173"
+  
+  company_structure_nginx:
+    container_name: company_structure_nginx
+    tty: true
+    depends_on: 
+      - "company_structure_api"
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "80:8080"
+    networks:
+      - dev
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
 
   company_structure_mongodb:
     image: mongo:7.0.2
