@@ -44,8 +44,8 @@ else
     {
         c.AllowCredentials();
         c.WithOrigins(
-            "https://24procards.ru:8573",
-            "http://24procards.ru:8573");
+            "https://24procards.ru",
+            "http://24procards.ru");
         c.AllowAnyMethod();
         c.AllowAnyHeader();
     });

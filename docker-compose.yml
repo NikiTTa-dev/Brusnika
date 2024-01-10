@@ -57,7 +57,7 @@ services:
     networks:
       - dev
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx:/etc/nginx
 
   company_structure_mongodb:
     image: mongo:7.0.2
